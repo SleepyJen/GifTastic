@@ -3,11 +3,16 @@ $(document).ready(function () {
         "embarrassed", "mean", "proud", "nervous", "silly", "disappointed", "confused", "impatient", "curious", "kind",
         "annoyed", "obnoxious", "excited", "grumpy"];
 
-    for (let i = 0; i < topics.length; i++) {
-        let btn = $('<button>');
-        btn.attr({ 'class': 'btn', 'data': topics[i] });
-        btn.text(topics[i]);
-        $('.buttons').append(btn);
+    mkbtns();
+
+    function mkbtns() {
+        $('.buttons').empty();
+        for (let i = 0; i < topics.length; i++) {
+            let btn = $('<button>');
+            btn.attr({ 'class': 'btn', 'data': topics[i] });
+            btn.text(topics[i]);
+            $('.buttons').append(btn);
+        }
     }
 
     $(document).on('click', 'button', function () {
@@ -27,15 +32,23 @@ $(document).ready(function () {
 
                 gifs.attr('src', data[i].images.fixed_height.url);
                 gifs.attr('class', 'images');
-                gifDiv.attr('class', 'gifBoxes');
+                gifDiv.attr('class', 'boxes');
+
                 rating.text("Rating: " + data[i].rating);
 
                 gifDiv.append(rating);
                 gifDiv.append(gifs);
+
                 $('#gifs').prepend(gifDiv);
             }
 
         });
+    });
+
+    $('.submitBtn').on('click', function () {
+        let text = $('#textInput').val();
+        topics.push(text);
+        mkbtns();
     });
 
 });

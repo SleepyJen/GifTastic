@@ -23,6 +23,13 @@ body{
     margin-bottom: 5px;
 }
 
-.images{
-    width: 200;
+.boxes{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#textInput{
+    width: 90%;
 }
