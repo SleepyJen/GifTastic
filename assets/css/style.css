@@ -15,3 +15,14 @@
 body{
     background-color: antiquewhite;
 }
+
+#gif-text{
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 50px;
+    margin-bottom: 5px;
+}
+
+.images{
+    width: 200;
+}
