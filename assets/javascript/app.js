@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $(document).on('click', 'button', function () {
         let attribute = $(this).attr('data');
-        var url = `https://api.giphy.com/v1/gifs/search?api_key=VgeYY3oYCCgPBIDvALitcLV5YJDro9CD&q=${attribute}&limit=10&offset=0&rating=G&lang=en`;
+        var url = `https://api.giphy.com/v1/gifs/search?api_key=VgeYY3oYCCgPBIDvALitcLV5YJDro9CD&q=${attribute}&limit=10&offset=0&lang=en`;
         $.ajax({
             method: 'GET',
             url: url
@@ -26,22 +26,44 @@ $(document).ready(function () {
             let data = result.data;
 
             for (let i = 0; i < data.length; i++) {
+                const still = data[i].images.fixed_height_still.url;
+                const animate = data[i].images.fixed_height.url
+
                 let gifDiv = $('<div>');
                 let rating = $('<p>');
                 let gifs = $('<img>');
 
-                gifs.attr('src', data[i].images.fixed_height.url);
-                gifs.attr('class', 'images');
+                gifs.attr('src', still);
+                gifs.attr('status', 'still');
+                gifs.attr('data-still', still);
+                gifs.attr('data-animate', animate);
+                gifs.attr('data', i);
+
                 gifDiv.attr('class', 'boxes');
 
                 rating.text("Rating: " + data[i].rating);
 
-                gifDiv.append(rating);
                 gifDiv.append(gifs);
+                gifDiv.append(rating);
 
                 $('#gifs').prepend(gifDiv);
             }
 
+            $(document).on('click', 'img', function () {
+                let status = $(this).attr('status');
+                let index = $(this).attr('data');
+                let still = $(this).attr('data-still');
+                let animate = $(this).attr('data-animate');
+
+                if (status === "still") {
+                    $(this).attr('src', animate);
+                    $(this).attr('status', 'animate');
+                } else {
+                    $(this).attr('src', still);
+                    $(this).attr('status', 'still');
+                }
+
+            });
         });
     });
 
