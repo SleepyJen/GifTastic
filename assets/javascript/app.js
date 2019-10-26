@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var topics = ["happy", "angry", "sad", "frustrated", "sneaky", "scared", "surprised", "shy", "bossy", "sleepy",
         "embarrassed", "mean", "proud", "nervous", "silly", "disappointed", "confused", "impatient", "curious", "kind",
-        "annoyed", "obnoxious", "excited", "grumpy"];
+        "annoyed", "love", "excited", "grumpy"];
 
     mkbtns();
 
@@ -49,28 +49,37 @@ $(document).ready(function () {
                 $('#gifs').prepend(gifDiv);
             }
 
-            $(document).on('click', 'img', function () {
-                let status = $(this).attr('status');
-                let index = $(this).attr('data');
-                let still = $(this).attr('data-still');
-                let animate = $(this).attr('data-animate');
-
-                if (status === "still") {
-                    $(this).attr('src', animate);
-                    $(this).attr('status', 'animate');
-                } else {
-                    $(this).attr('src', still);
-                    $(this).attr('status', 'still');
-                }
-
-            });
         });
     });
 
-    $('.submitBtn').on('click', function () {
-        let text = $('#textInput').val();
-        topics.push(text);
-        mkbtns();
+    $(document).on('click', 'img', function () {
+        let status = $(this).attr('status');
+        let still = $(this).attr('data-still');
+        let animate = $(this).attr('data-animate');
+
+        if (status === "still") {
+            $(this).attr('src', animate);
+            $(this).attr('status', 'animate');
+        } else {
+            $(this).attr('src', still);
+            $(this).attr('status', 'still');
+        }
     });
 
+    $('.submitBtn').on('click', function () {
+        clicking();
+    });
+
+    $('#textInput').keypress(e => {
+        if (e.keyCode == '13') {
+            clicking();
+        }
+    });
+
+    function clicking() {
+        let text = $('#textInput').val();
+        $('#textInput').val('');
+        topics.push(text);
+        mkbtns();
+    }
 });
